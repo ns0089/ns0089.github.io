@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nazmus Sakib — CS Student &amp; Cybersecurity Enthusiast</title>
+<meta name="description" content="Portfolio of Nazmus Sakib — Computer Science student focused on cybersecurity, networking, and ethical hacking.">
+<meta name="theme-color" content="#070a08">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #070a08;
+    --bg-raised: #0d130f;
+    --bg-card: #0e1512;
+    --line: #1c2e21;
+    --line-soft: #142019;
+    --text: #d6e8dc;
+    --text-dim: #7fa38c;
+    --text-faint: #4a6455;
+    --accent: #39ff8c;
+    --accent-dim: #1f8a52;
+    --accent-glow: rgba(57,255,140,0.18);
+    --amber: #ffb454;
+    --radius: 3px;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(57,255,140,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57,255,140,0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
+    color: var(--text);
+    font-family: var(--mono);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--accent); color: #041008; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .wrap{ max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(7,10,8,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 62px;
+  }
+  .logo{
+    font-weight:700; font-size:15px; color: var(--accent);
+    white-space: nowrap;
+  }
+  .logo .prompt{ color: var(--text-faint); }
+  .navlinks{ display:flex; gap: 4px; align-items:center; }
+  .navlinks a{
+    padding: 8px 12px; font-size: 13px; color: var(--text-dim);
+    border-radius: var(--radius);
+    transition: color .15s ease, background .15s ease;
+  }
+  .navlinks a:hover, .navlinks a.active{ color: var(--accent); background: var(--accent-glow); }
+  .menu-btn{
+    display:none; background:none; border: 1px solid var(--line); color: var(--accent);
+    font-family: var(--mono); font-size: 18px; padding: 6px 10px; border-radius: var(--radius); cursor:pointer;
+  }
+
+  @media (max-width: 720px){
+    .navlinks{
+      position: fixed; top: 62px; left:0; right:0;
+      flex-direction: column; align-items: stretch;
+      background: var(--bg-raised); border-bottom: 1px solid var(--line-soft);
+      padding: 8px 16px 16px; gap:0;
+      transform: translateY(-8px); opacity:0; pointer-events:none;
+      transition: transform .18s ease, opacity .18s ease;
+    }
+    .navlinks.open{ transform: translateY(0); opacity:1; pointer-events:auto; }
+    .navlinks a{ padding: 12px 6px; border-bottom: 1px solid var(--line-soft); }
+    .menu-btn{ display:inline-block; }
+  }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{ padding: 96px 0; border-bottom: 1px solid var(--line-soft); }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    color: var(--accent); font-size: 13px; margin-bottom: 14px;
+  }
+  .eyebrow::before{ content:'$'; color: var(--text-faint); }
+  h2.title{
+    font-size: clamp(22px, 3vw, 30px); margin: 0 0 8px; color: var(--text);
+    font-weight: 700;
+  }
+  .subtitle{ color: var(--text-dim); font-size: 14px; margin: 0 0 48px; }
+
+  .reveal{ opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding: 110px 0 96px; border-bottom: 1px solid var(--line-soft); }
+  .hero-grid{ display:grid; grid-template-columns: 1.25fr 0.85fr; gap: 56px; align-items:center; }
+  @media (max-width: 860px){ .hero-grid{ grid-template-columns: 1fr; gap: 40px; } .hero-photo-col{ order:-1; max-width: 260px; margin: 0 auto; } }
+
+  .photo-frame{
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 20px 60px -30px rgba(0,0,0,0.85);
+  }
+  .photo-frame::before{
+    content: '';
+    position: absolute; inset: -1px;
+    border-radius: 9px;
+    padding: 1px;
+    background: linear-gradient(160deg, var(--accent), transparent 45%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: .6;
+  }
+  .photo-frame img{
+    display:block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 4px; filter: grayscale(15%) contrast(1.05);
+  }
+  .photo-tag{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top: 10px; padding: 8px 4px 2px; font-size: 11px; color: var(--text-faint);
+  }
+  .photo-tag .live{ display:inline-flex; align-items:center; gap:6px; color: var(--accent); }
+  .photo-tag .live .dot{ width:6px; height:6px; border-radius:50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: pulse 1.8s ease-in-out infinite; }
+
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size: 12px; color: var(--text-dim);
+    border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  .badge .dot{
+    width:7px; height:7px; border-radius:50%; background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+
+  .term{
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 640px;
+    box-shadow: 0 20px 60px -30px rgba(0,0,0,0.8);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:7px;
+    padding: 10px 14px; background: var(--bg-raised); border-bottom: 1px solid var(--line);
+  }
+  .term-dot{ width:10px; height:10px; border-radius:50%; }
+  .term-dot.r{ background:#ff5f56; } .term-dot.y{ background:#ffbd2e; } .term-dot.g{ background:#27c93f; }
+  .term-title{ margin-left: 8px; font-size: 11px; color: var(--text-faint); }
+  .term-body{ padding: 18px 20px 22px; font-size: 14px; min-height: 128px; }
+  .term-body .line{ color: var(--text-dim); }
+  .term-body .cmd{ color: var(--accent); }
+  #typed-out{ color: var(--text); font-weight: 600; }
+  .caret{ display:inline-block; width:8px; background: var(--accent); animation: blink 1s step-end infinite; margin-left:2px; }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  h1.name{
+    font-size: clamp(34px, 6vw, 56px); margin: 26px 0 6px; font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  h1.name .cursor-hide{ visibility:hidden; }
+  .role{ color: var(--accent); font-size: clamp(15px, 2vw, 18px); margin: 0 0 22px; font-weight: 600; }
+  .lede{ color: var(--text-dim); max-width: 560px; font-size: 15px; margin: 0 0 34px; }
+
+  .cta-row{ display:flex; gap: 14px; flex-wrap: wrap; }
+  .btn{
+    font-family: var(--mono); font-size: 13px; font-weight: 600;
+    padding: 12px 20px; border-radius: var(--radius); cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .btn-solid{ background: var(--accent); color: #05130a; border:1px solid var(--accent); }
+  .btn-solid:hover{ transform: translateY(-2px); box-shadow: 0 10px 26px -10px var(--accent-glow); }
+  .btn-ghost{ background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.4fr 1fr; gap: 44px; align-items:start; }
+  .about-text p{ color: var(--text-dim); font-size: 14.5px; margin: 0 0 16px; }
+  .about-text strong{ color: var(--text); }
+  .fact-list{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .fact{
+    border: 1px solid var(--line); background: var(--bg-card); border-radius: var(--radius);
+    padding: 16px; 
+  }
+  .fact .k{ color: var(--accent); font-size: 20px; font-weight: 800; }
+  .fact .v{ color: var(--text-faint); font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; margin-top:4px; }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- SKILLS ---------- */
+  .skill-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .skill-card{
+    border: 1px solid var(--line); background: var(--bg-card); border-radius: 6px;
+    padding: 22px; transition: border-color .15s ease, transform .15s ease;
+  }
+  .skill-card:hover{ border-color: var(--accent-dim); transform: translateY(-3px); }
+  .skill-card h3{ margin: 0 0 14px; font-size: 14px; color: var(--text); }
+  .skill-card h3 .idx{ color: var(--text-faint); margin-right: 8px; }
+  .pill-row{ display:flex; flex-wrap: wrap; gap: 8px; }
+  .pill{
+    font-size: 11.5px; color: var(--text-dim); border: 1px solid var(--line-soft);
+    padding: 5px 10px; border-radius: 999px; background: var(--bg-raised);
+  }
+  @media (max-width: 860px){ .skill-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-list{ display:flex; flex-direction: column; gap: 18px; }
+  .proj{
+    border: 1px solid var(--line); background: var(--bg-card); border-radius: 6px;
+    padding: 24px 26px; position: relative; overflow:hidden;
+  }
+  .proj::before{
+    content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background: var(--accent-dim);
+  }
+  .proj-head{ display:flex; align-items:baseline; justify-content:space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+  .proj-head h3{ margin:0; font-size: 16px; color: var(--text); }
+  .proj-date{ font-size: 11.5px; color: var(--accent); border: 1px solid var(--accent-dim); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .proj ul{ margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 13.5px; }
+  .proj li{ margin-bottom: 6px; }
+  .proj li::marker{ color: var(--accent); }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .contact-list{ display:flex; flex-direction: column; gap: 14px; }
+  .contact-item{
+    display:flex; align-items:center; gap: 14px;
+    border: 1px solid var(--line); background: var(--bg-card); border-radius: var(--radius);
+    padding: 14px 16px; transition: border-color .15s ease;
+  }
+  .contact-item:hover{ border-color: var(--accent-dim); }
+  .contact-item .ic{
+    width: 34px; height:34px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    border: 1px solid var(--line); border-radius: 50%; color: var(--accent);
+  }
+  .contact-item .ic-text{ font-size: 10.5px; font-weight: 700; letter-spacing: .02em; }
+  .contact-item .lbl{ font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing:.06em; }
+  .contact-item .val{ font-size: 13.5px; color: var(--text); word-break: break-all; }
+
+  form.msgform{ display:flex; flex-direction:column; gap: 14px; }
+  .field label{ display:block; font-size: 11px; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+  .field input, .field textarea{
+    width: 100%; background: var(--bg-card); border: 1px solid var(--line); color: var(--text);
+    font-family: var(--mono); font-size: 13.5px; padding: 11px 13px; border-radius: var(--radius);
+  }
+  .field input:focus, .field textarea:focus{ border-color: var(--accent); }
+  .field textarea{ min-height: 92px; resize: vertical; }
+  .form-note{ font-size: 11.5px; color: var(--text-faint); }
+
+  @media (max-width: 780px){ .contact-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- FOOTER ---------- */
+  footer{ padding: 34px 0 50px; }
+  footer .wrap{ display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap: 14px; }
+  footer .echo{ font-size: 12px; color: var(--text-faint); }
+  footer .echo .accent{ color: var(--accent); }
+  .foot-links{ display:flex; gap: 16px; }
+  .foot-links a{ font-size: 12px; color: var(--text-dim); }
+  .foot-links a:hover{ color: var(--accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo"><span class="prompt">root@nazmus:~$</span> whoami</a>
+    <div class="navlinks" id="navlinks">
+      <a href="#about">~/about</a>
+      <a href="#skills">~/skills</a>
+      <a href="#projects">~/projects</a>
+      <a href="#contact">~/contact</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">≡</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="badge"><span class="dot"></span> Open to internships &amp; research collaborations</div>
+
+        <div class="term">
+          <div class="term-bar">
+            <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+            <span class="term-title">nazmus@sakib: ~</span>
+          </div>
+          <div class="term-body">
+            <div class="line"><span class="cmd">$</span> <span id="typed-cmd"></span><span class="caret" id="caret1"></span></div>
+            <div id="typed-out" style="margin-top:6px;"></div>
+          </div>
+        </div>
+
+        <h1 class="name">Nazmus Sakib</h1>
+        <p class="role">Computer Science Student &amp; Cybersecurity Enthusiast</p>
+        <p class="lede">CSE undergrad from Bangladesh exploring system security, networking, and software development — with a disciplined, analytical approach and a love for reflective writing on the side.</p>
+
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-solid">./view_projects.sh</a>
+          <a href="#contact" class="btn btn-ghost">./contact --me</a>
+        </div>
+      </div>
+
+      <div class="hero-photo-col">
+        <div class="photo-frame">
+          <img src="profile.jpg" alt="Nazmus Sakib">
+          <div class="photo-tag">
+            <span>IMG_NS_0089.jpg</span>
+            <span class="live"><span class="dot"></span>online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap reveal">
+      <div class="eyebrow">cat about.md</div>
+      <h2 class="title">About Me</h2>
+      <p class="subtitle">Who I am, and what drives the curiosity.</p>
+
+      <div class="about-grid">
+        <div class="about-text">
+          <p>CSE undergrad student at <strong>North South University</strong>, Bangladesh, with a deep curiosity for <strong>cyber security, networking, and software development</strong>. Building on a background in ethical hacking fundamentals and network routing, I bring a disciplined, analytical approach to technology.</p>
+          <p>Since 2021, I've served as a <strong>District Ambassador for Blue Team Bangladesh</strong>, a cybersecurity learning platform — helping grow the local security community. My current interests span <strong>AI automation, augmented AI, cryptography, digital forensics, and OSINT</strong>.</p>
+          <p>Beyond technical pursuits, I'm a reflective writer focused on continuous personal growth, ethics, and character — because good engineering and good judgment tend to come from the same place.</p>
+          <div class="pill-row" style="margin-top:18px;">
+            <span class="pill">AI Automation</span>
+            <span class="pill">Augmented AI</span>
+            <span class="pill">Cryptography</span>
+            <span class="pill">Digital Forensics</span>
+            <span class="pill">OSINT</span>
+          </div>
+        </div>
+        <div class="fact-list">
+          <div class="fact"><div class="k">GPA 5</div><div class="v">SSC Result</div></div>
+          <div class="fact"><div class="k">GPA 5</div><div class="v">HSC Result</div></div>
+          <div class="fact"><div class="k">NSU</div><div class="v">CSE Undergrad</div></div>
+          <div class="fact"><div class="k">2021</div><div class="v">Blue Team BD Ambassador</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap reveal">
+      <div class="eyebrow">ls ./skills/</div>
+      <h2 class="title">Skills &amp; Expertise</h2>
+      <p class="subtitle">Tools, protocols, and strengths I'm building on.</p>
+
+      <div class="skill-grid">
+        <div class="skill-card">
+          <h3><span class="idx">01</span>Cybersecurity &amp; Networking</h3>
+          <div class="pill-row">
+            <span class="pill">Ethical Hacking Fundamentals (CEH concepts)</span>
+            <span class="pill">CEH Certified — Microthingz</span>
+            <span class="pill">SQL Injection Attacks Certification</span>
+            <span class="pill">Cisco Lab Crash Course — EC-Council CodeRed</span>
+            <span class="pill">MTCNA Full Course</span>
+            <span class="pill">Network Security Fundamentals — Udemy</span>
+            <span class="pill">MikroTik Protocols (MTCNA level)</span>
+            <span class="pill">Network Security &amp; Administration</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="idx">02</span>Programming Languages</h3>
+          <div class="pill-row">
+            <span class="pill">C</span>
+            <span class="pill">Python</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="idx">03</span>Security Tools &amp; Practice</h3>
+          <div class="pill-row">
+            <span class="pill">Kali Linux</span>
+            <span class="pill">VirtualBox</span>
+            <span class="pill">CTF Training</span>
+            <span class="pill">Metasploitable Labs</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="idx">04</span>Developer Tools &amp; VCS</h3>
+          <div class="pill-row">
+            <span class="pill">Git</span>
+            <span class="pill">GitHub</span>
+            <span class="pill">PowerShell / CLI</span>
+            <span class="pill">Environment Configuration</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3><span class="idx">05</span>Core Strengths</h3>
+          <div class="pill-row">
+            <span class="pill">Technical Problem Solving</span>
+            <span class="pill">Academic Excellence</span>
+            <span class="pill">Systems Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap reveal">
+      <div class="eyebrow">ls ./projects/</div>
+      <h2 class="title">Projects &amp; Hands-On Experience</h2>
+      <p class="subtitle">What I've built and practiced so far.</p>
+
+      <div class="proj-list">
+        <div class="proj">
+          <div class="proj-head">
+            <h3>Cybersecurity &amp; Developer Portfolio</h3>
+            <span class="proj-date">2026</span>
+          </div>
+          <ul>
+            <li>Engineered and published a personal portfolio showcasing technical projects, security research, and reflective writing.</li>
+            <li>Configured source control and repository management via Git/GitHub.</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <div class="proj-head">
+            <h3>Network &amp; Security Labs</h3>
+            <span class="proj-date">Ongoing</span>
+          </div>
+          <ul>
+            <li>Practical application of Certified Ethical Hacker (CEH) principles — practicing vulnerability assessment and security concepts.</li>
+            <li>Simulated and configured network routing environments based on MikroTik certification standards.</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <div class="proj-head">
+            <h3>ISP-Level MikroTik Network Administration</h3>
+            <span class="proj-date">1 Year</span>
+          </div>
+          <ul>
+            <li>Observed and assisted with real ISP-level MikroTik network administration for a full year.</li>
+            <li>Worked hands-on with IP addressing, IP pools, routing rules, firewall configuration, and traffic management.</li>
+            <li>Handled user management and network protection measures in a live production environment.</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <div class="proj-head">
+            <h3>University Coursework Projects — C &amp; Python</h3>
+            <span class="proj-date">Academic</span>
+          </div>
+          <ul>
+            <li>Completed individual university projects using C and Python, covering core programming and problem-solving fundamentals.</li>
+            <li>Built and debugged programs independently as part of coursework requirements.</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <div class="proj-head">
+            <h3>Python Data Analysis Project</h3>
+            <span class="proj-date">Academic</span>
+          </div>
+          <ul>
+            <li>Processed and analyzed a large dataset using Python, applying data-handling and analysis techniques.</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <div class="proj-head">
+            <h3>Ethical Hacking &amp; CTF Practice</h3>
+            <span class="proj-date">Self-Practice</span>
+          </div>
+          <ul>
+            <li>Practiced ethical hacking and CTF challenges locally using Metasploitable inside VirtualBox.</li>
+            <li>Applied CEH and CTF training concepts in a safe, isolated lab environment.</li>
+          </ul>
+        </div>
+        <div class="proj">
+          <div class="proj-head">
+            <h3>Home Network Infrastructure</h3>
+            <span class="proj-date">Ongoing</span>
+          </div>
+          <ul>
+            <li>Designed, configured, and continue to manage a vast home network setup.</li>
+            <li>Maintain routing, device management, and network protection for the environment.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap reveal">
+      <div class="eyebrow">./contact --info</div>
+      <h2 class="title">Get In Touch</h2>
+      <p class="subtitle">Have a question, an opportunity, or want to collaborate? Let's connect.</p>
+
+      <div class="contact-grid">
+        <div class="contact-list">
+          <a class="contact-item" href="mailto:nazmus.ece.253@northsouth.edu">
+            <span class="ic">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
+            </span>
+            <span><div class="lbl">Email</div><div class="val">nazmus.ece.253@northsouth.edu</div></span>
+          </a>
+          <a class="contact-item" href="https://github.com/ns0089" target="_blank" rel="noopener">
+            <span class="ic">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.5c.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.58 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            </span>
+            <span><div class="lbl">GitHub</div><div class="val">github.com/ns0089</div></span>
+          </a>
+          <div class="contact-item">
+            <span class="ic">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            </span>
+            <span><div class="lbl">Location</div><div class="val">Dhaka, Bangladesh</div></span>
+          </div>
+          <a class="contact-item" href="https://www.facebook.com/CEH.ns.0089" target="_blank" rel="noopener">
+            <span class="ic ic-text">FB</span>
+            <span><div class="lbl">Facebook</div><div class="val">facebook.com/CEH.ns.0089</div></span>
+          </a>
+          <a class="contact-item" href="https://t.me/CEH_ns0089" target="_blank" rel="noopener">
+            <span class="ic ic-text">TG</span>
+            <span><div class="lbl">Telegram</div><div class="val">t.me/CEH_ns0089</div></span>
+          </a>
+          <div class="contact-item">
+            <span class="ic ic-text">DC</span>
+            <span><div class="lbl">Discord</div><div class="val">ns_0089</div></span>
+          </div>
+        </div>
+
+        <form class="msgform" id="msgform">
+          <div class="field">
+            <label for="fname">Name</label>
+            <input id="fname" name="name" type="text" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="femail">Email</label>
+            <input id="femail" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="fmsg">Message</label>
+            <textarea id="fmsg" name="message" placeholder="Say hello..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-solid" style="align-self:flex-start;">./send_message.sh</button>
+          <p class="form-note" id="formNote">Note: this form is display-only for now — it opens your email client. Wire it up to Formspree or similar to receive messages directly.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="echo">echo <span class="accent">"&copy; 2026 Nazmus Sakib — built with Git, GitHub &amp; curiosity."</span></div>
+    <div class="foot-links">
+      <a href="https://github.com/ns0089" target="_blank" rel="noopener">./github</a>
+      <a href="https://www.facebook.com/CEH.ns.0089" target="_blank" rel="noopener">./facebook</a>
+      <a href="https://t.me/CEH_ns0089" target="_blank" rel="noopener">./telegram</a>
+      <a href="mailto:nazmus.ece.253@northsouth.edu">./email</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const navlinks = document.getElementById('navlinks');
+  menuBtn.addEventListener('click', () => {
+    const open = navlinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navlinks.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  // active nav link on scroll
+  const sections = document.querySelectorAll('main section[id]');
+  const navA = navlinks.querySelectorAll('a');
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        navA.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(s => spy.observe(s));
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => ro.observe(el));
+
+  // typed terminal intro
+  const cmdEl = document.getElementById('typed-cmd');
+  const outEl = document.getElementById('typed-out');
+  const caret1 = document.getElementById('caret1');
+  const cmdText = 'whoami';
+  const outHTML = 'Nazmus Sakib <span style="color:var(--text-dim); font-weight:400;">— CSE student, security-curious, building things.</span>';
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeText(el, text, speed, done){
+    if(prefersReduced){ el.textContent = text; if(done) done(); return; }
+    let i = 0;
+    const timer = setInterval(() => {
+      el.textContent = text.slice(0, i + 1);
+      i++;
+      if(i >= text.length){ clearInterval(timer); if(done) done(); }
+    }, speed);
+  }
+
+  window.addEventListener('load', () => {
+    typeText(cmdEl, cmdText, 90, () => {
+      caret1.style.display = 'none';
+      setTimeout(() => { outEl.innerHTML = outHTML; }, 250);
+    });
+  });
+
+  // contact form -> mailto fallback
+  document.getElementById('msgform').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('fname').value;
+    const email = document.getElementById('femail').value;
+    const msg = document.getElementById('fmsg').value;
+    const subject = encodeURIComponent('Portfolio contact from ' + name);
+    const body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + email + ')');
+    window.location.href = 'mailto:nazmus.ece.253@northsouth.edu?subject=' + subject + '&body=' + body;
+  });
+</script>
+
+</body>
+</html>
