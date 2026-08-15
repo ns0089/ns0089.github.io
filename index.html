@@ -6,6 +6,11 @@
 <title>Nazmus Sakib — CS Student &amp; Cybersecurity Enthusiast</title>
 <meta name="description" content="Portfolio of Nazmus Sakib — Computer Science student focused on cybersecurity, networking, and ethical hacking.">
 <meta name="theme-color" content="#070a08">
+<meta property="og:title" content="Nazmus Sakib — CSE Student & Cybersecurity Enthusiast">
+<meta property="og:description" content="Nazmus Sakib — CSE student at NSU focused on cybersecurity, networking, and ethical hacking.">
+<meta property="og:image" content="https://ns0089.github.io/profile.jpg">
+<meta property="og:url" content="https://ns0089.github.io/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -142,7 +147,7 @@
     opacity: .6;
   }
   .photo-frame img{
-    display:block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    display:block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top center;
     border-radius: 4px; filter: grayscale(15%) contrast(1.05);
   }
   .photo-tag{
@@ -227,12 +232,16 @@
     padding: 22px; transition: border-color .15s ease, transform .15s ease;
   }
   .skill-card:hover{ border-color: var(--accent-dim); transform: translateY(-3px); }
+  .proj:hover, .skill-card:hover{ box-shadow: 0 0 20px -5px rgba(57, 255, 140, 0.15); }
   .skill-card h3{ margin: 0 0 14px; font-size: 14px; color: var(--text); }
   .skill-card h3 .idx{ color: var(--text-faint); margin-right: 8px; }
   .pill-row{ display:flex; flex-wrap: wrap; gap: 8px; }
   .pill{
     font-size: 11.5px; color: var(--text-dim); border: 1px solid var(--line-soft);
-    padding: 5px 10px; border-radius: 999px; background: var(--bg-raised);
+    padding: 5px 10px; border-radius: 8px; background: var(--bg-raised);
+    white-space: normal;
+    max-width: 100%;
+    word-break: break-word;
   }
   @media (max-width: 860px){ .skill-grid{ grid-template-columns: 1fr; } }
 
@@ -292,6 +301,7 @@
 </style>
 </head>
 <body>
+<canvas id="matrixCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; opacity:0.18; pointer-events:none;"></canvas>
 
 <header>
   <nav class="wrap">
@@ -322,6 +332,12 @@
           <div class="term-body">
             <div class="line"><span class="cmd">$</span> <span id="typed-cmd"></span><span class="caret" id="caret1"></span></div>
             <div id="typed-out" style="margin-top:6px;"></div>
+
+            <div class="line" style="margin-top:12px; display:none;" id="interactive-prompt">
+              <span class="cmd">visitor@sakib:~$</span>
+              <input type="text" id="term-input" autocomplete="off" style="background:transparent; border:none; color:var(--accent); font-family:var(--mono); outline:none; width:70%;">
+            </div>
+            <div id="term-response" style="font-size:12.5px; color:var(--text-dim); margin-top:4px;"></div>
           </div>
         </div>
 
@@ -558,7 +574,7 @@
           </div>
         </div>
 
-        <form class="msgform" id="msgform">
+        <form class="msgform" id="msgform" action="https://formspree.io/f/xvkpbpap" method="POST">
           <div class="field">
             <label for="fname">Name</label>
             <input id="fname" name="name" type="text" placeholder="Your name" required>
@@ -572,7 +588,7 @@
             <textarea id="fmsg" name="message" placeholder="Say hello..." required></textarea>
           </div>
           <button type="submit" class="btn btn-solid" style="align-self:flex-start;">./send_message.sh</button>
-          <p class="form-note" id="formNote"></p>
+          <p class="form-note" id="formNote">Messages are delivered straight to my inbox via Formspree.</p>
         </form>
       </div>
     </div>
@@ -646,20 +662,131 @@
   window.addEventListener('load', () => {
     typeText(cmdEl, cmdText, 90, () => {
       caret1.style.display = 'none';
-      setTimeout(() => { outEl.innerHTML = outHTML; }, 250);
+      setTimeout(() => {
+        outEl.innerHTML = outHTML;
+        const promptEl = document.getElementById('interactive-prompt');
+        if(promptEl) promptEl.style.display = 'flex';
+      }, 250);
     });
   });
 
-  // contact form -> mailto fallback
-  document.getElementById('msgform').addEventListener('submit', function(e){
-    e.preventDefault();
-    const name = document.getElementById('fname').value;
-    const email = document.getElementById('femail').value;
-    const msg = document.getElementById('fmsg').value;
-    const subject = encodeURIComponent('Portfolio contact from ' + name);
-    const body = encodeURIComponent(msg + '\n\n— ' + name + ' (' + email + ')');
-    window.location.href = 'mailto:nazmus.ece.253@northsouth.edu?subject=' + subject + '&body=' + body;
+  // interactive terminal commands
+  document.getElementById('term-input')?.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const cmd = this.value.trim().toLowerCase();
+      const resp = document.getElementById('term-response');
+      this.value = '';
+
+      const commands = {
+        'help': 'Available commands: about, skills, projects, contact, clear, sudo',
+        'about': 'Navigating to About section...',
+        'skills': 'Navigating to Skills section...',
+        'projects': 'Navigating to Projects section...',
+        'contact': 'Navigating to Contact section...',
+        'clear': '',
+        'sudo': 'Access denied: User is not in the sudoers file. This incident will be reported.'
+      };
+
+      if (commands[cmd] !== undefined) {
+        resp.innerHTML = `<span style="color:var(--accent)">> ${commands[cmd]}</span>`;
+        if (['about', 'skills', 'projects', 'contact'].includes(cmd)) {
+          document.getElementById(cmd)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (cmd === 'clear') {
+          resp.innerHTML = '';
+        }
+      } else {
+        resp.innerHTML = `<span style="color:#ff5f56">> Command not found: '${cmd}'. Type 'help'.</span>`;
+      }
+    }
   });
+
+  // contact form now submits directly to Formspree (see form action attribute) —
+  // no JS interception needed.
+
+  // --- matrix rain background (skipped for reduced-motion users) ---
+  if (!prefersReduced) {
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const matrixChars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(7, 10, 8, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#39ff8c';
+      ctx.font = `${fontSize}px monospace`;
+
+      drops.forEach((y, i) => {
+        const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+        ctx.fillText(text, i * fontSize, y * fontSize);
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      });
+    }
+    setInterval(drawMatrix, 40);
+  }
+
+  // --- cyberpunk text decode effect on section headings ---
+  const textElements = document.querySelectorAll('h2.title');
+  if (!prefersReduced) {
+    const decodeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const originalText = el.innerText;
+          const glyphs = 'ABCDEF0123456789!@#$%^&*()';
+          let iteration = 0;
+
+          const interval = setInterval(() => {
+            el.innerText = originalText
+              .split('')
+              .map((letter, index) => {
+                if (index < iteration) return originalText[index];
+                return glyphs[Math.floor(Math.random() * glyphs.length)];
+              })
+              .join('');
+
+            if (iteration >= originalText.length) {
+              clearInterval(interval);
+            }
+            iteration += 1 / 2;
+          }, 30);
+
+          decodeObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    textElements.forEach(el => decodeObserver.observe(el));
+  }
+
+  // --- 3D tilt effect on project and skill cards ---
+  if (!prefersReduced) {
+    document.querySelectorAll('.skill-card, .proj').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        card.style.transform = `perspective(1000px) rotateX(${-y / 25}deg) rotateY(${x / 25}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
+    });
+  }
 </script>
 
 </body>
