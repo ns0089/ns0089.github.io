@@ -6,6 +6,7 @@
 <title>Nazmus Sakib — CSE Student &amp; Cybersecurity Enthusiast</title>
 <meta name="description" content="Portfolio of Nazmus Sakib — Computer Science student focused on cybersecurity, networking, and ethical hacking.">
 <meta name="theme-color" content="#070a08">
+<meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://ns0089.github.io/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23070a08%22/><text x=%2250%22 y=%2266%22 font-family=%22monospace%22 font-size=%2260%22 fill=%22%2339ff8c%22 text-anchor=%22middle%22>_</text></svg>">
 <meta property="og:type" content="website">
@@ -19,7 +20,7 @@
 <meta name="twitter:image" content="https://ns0089.github.io/profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #070a08;
@@ -29,7 +30,7 @@
     --line-soft: #142019;
     --text: #d6e8dc;
     --text-dim: #7fa38c;
-    --text-faint: #4a6455;
+    --text-faint: #6a8a76;
     --accent: #39ff8c;
     --accent-dim: #1f8a52;
     --accent-glow: rgba(57,255,140,0.18);
@@ -370,9 +371,9 @@
 
             <div class="line" style="margin-top:12px; display:none;" id="interactive-prompt">
               <span class="cmd">visitor@sakib:~$</span>
-              <input type="text" id="term-input" autocomplete="off" style="background:transparent; border:none; color:var(--accent); font-family:var(--mono); outline:none; width:70%;">
+              <input type="text" id="term-input" autocomplete="off" aria-label="Terminal command input, type help for options" style="background:transparent; border:none; color:var(--accent); font-family:var(--mono); outline:none; width:70%;">
             </div>
-            <div id="term-response" style="font-size:12.5px; color:var(--text-dim); margin-top:4px;"></div>
+            <div id="term-response" role="status" aria-live="polite" style="font-size:12.5px; color:var(--text-dim); margin-top:4px;"></div>
           </div>
         </div>
 
@@ -613,11 +614,11 @@
           <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" aria-hidden="true">
           <div class="field">
             <label for="fname">Name</label>
-            <input id="fname" name="name" type="text" placeholder="Your name" required>
+            <input id="fname" name="name" type="text" placeholder="Your name" autocomplete="name" required>
           </div>
           <div class="field">
             <label for="femail">Email</label>
-            <input id="femail" name="email" type="email" placeholder="you@example.com" required>
+            <input id="femail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
           </div>
           <div class="field">
             <label for="fmsg">Message</label>
