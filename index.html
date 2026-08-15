@@ -6,11 +6,17 @@
 <title>Nazmus Sakib — CS Student &amp; Cybersecurity Enthusiast</title>
 <meta name="description" content="Portfolio of Nazmus Sakib — Computer Science student focused on cybersecurity, networking, and ethical hacking.">
 <meta name="theme-color" content="#070a08">
-<meta property="og:title" content="Nazmus Sakib — CSE Student & Cybersecurity Enthusiast">
+<link rel="canonical" href="https://ns0089.github.io/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2216%22 fill=%22%23070a08%22/><text x=%2250%22 y=%2266%22 font-family=%22monospace%22 font-size=%2260%22 fill=%22%2339ff8c%22 text-anchor=%22middle%22>_</text></svg>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nazmus Sakib — CSE Student &amp; Cybersecurity Enthusiast">
 <meta property="og:description" content="Nazmus Sakib — CSE student at NSU focused on cybersecurity, networking, and ethical hacking.">
 <meta property="og:image" content="https://ns0089.github.io/profile.jpg">
 <meta property="og:url" content="https://ns0089.github.io/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nazmus Sakib — CSE Student &amp; Cybersecurity Enthusiast">
+<meta name="twitter:description" content="Nazmus Sakib — CSE student at NSU focused on cybersecurity, networking, and ethical hacking.">
+<meta name="twitter:image" content="https://ns0089.github.io/profile.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -298,10 +304,39 @@
   .foot-links{ display:flex; gap: 16px; }
   .foot-links a{ font-size: 12px; color: var(--text-dim); }
   .foot-links a:hover{ color: var(--accent); }
+
+  /* ---------- SKIP LINK ---------- */
+  .skip-link{
+    position:absolute; left:-9999px; top:auto;
+    background: var(--accent); color:#05130a; font-weight:700;
+    padding:10px 16px; border-radius: var(--radius); z-index:100;
+    font-family: var(--mono); font-size:13px;
+  }
+  .skip-link:focus{ left:16px; top:16px; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Nazmus Sakib",
+  "url": "https://ns0089.github.io/",
+  "image": "https://ns0089.github.io/profile.jpg",
+  "jobTitle": "Computer Science Student",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "North South University"
+  },
+  "sameAs": [
+    "https://github.com/ns0089",
+    "https://www.facebook.com/CEH.ns.0089",
+    "https://t.me/CEH_ns0089"
+  ]
+}
+</script>
 </head>
 <body>
-<canvas id="matrixCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; opacity:0.18; pointer-events:none;"></canvas>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<canvas id="matrixCanvas" aria-hidden="true" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; opacity:0.18; pointer-events:none;"></canvas>
 
 <header>
   <nav class="wrap">
@@ -316,7 +351,7 @@
   </nav>
 </header>
 
-<main>
+<main id="main-content">
 
   <!-- HERO -->
   <section class="hero wrap">
@@ -575,6 +610,7 @@
         </div>
 
         <form class="msgform" id="msgform" action="https://formspree.io/f/xvkpbpap" method="POST">
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" aria-hidden="true">
           <div class="field">
             <label for="fname">Name</label>
             <input id="fname" name="name" type="text" placeholder="Your name" required>
@@ -735,7 +771,15 @@
         drops[i]++;
       });
     }
-    setInterval(drawMatrix, 40);
+    let matrixTimer = setInterval(drawMatrix, 40);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(matrixTimer);
+      } else {
+        matrixTimer = setInterval(drawMatrix, 40);
+      }
+    });
   }
 
   // --- cyberpunk text decode effect on section headings ---
